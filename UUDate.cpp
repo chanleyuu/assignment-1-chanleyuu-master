@@ -34,19 +34,24 @@ UUDate::UUDate(std::string date) {
 
 void UUDate::IncrementDate() {
 	day_++;
-	if (isleapyear()) {
+	if (day_ > 31 && (month_ == 1 || month_ == 3 ||
+		month_ == 5 || month_ == 7 || month_ == 8 || month_ == 10)
+		|| day_ > 30 && (month_ == 4 || month_ == 6 || month_ == 9 || month_ == 11)
+		|| day_ > 29 && month_ == 2 && isleapyear()
+		|| day_ > 28 && month_ == 2 && !isleapyear()) {
 		day_ = 1;
 		month_++;
+	}
+	else if (day_ > 31 && month_ == 12) {
+		day_ = 1;
+		month_ = 1;
+		year_++;
 	}
 	//TODO - Add your implementation here
 }
 
 bool UUDate::isleapyear() {
-	if (day_ > 31 && (month_ == 1 || month_ == 3 ||
-		month_ == 5 || month_ == 7 || month_ == 8 || month_ == 10 || month_ == 12)
-		|| day_ > 30 && (month_ == 4 || month_ == 6 || month_ == 9 || month_ == 11)
-		|| day_ > 29 && month_ == 2 && year_ % 4 == 0 && year_ % 100 != 0
-		|| day_ > 28 && month_ == 2 && (year_ % 4 != 0 || year_ % 4 == 0 && year_ % 100 == 0)) {
+	if (year_ % 4 == 0 && year_ % 100 != 100 || year_ % 400 == 0) {
 		return true;
 	}
 	return false;
@@ -96,13 +101,26 @@ int UUDate::Between(UUDate date) {
 	if (years > 0) {
 		total += years * 365;
 	}
+	else {
+		total -= years * 365;
+	}
 
 	if (months > 0) {
 		total += months;
+	} 
+	else {
+		total -= months;
 	}
 
 	if (days > 0) {
 		total += days;
+	}
+	else {
+		total -= days;
+	}
+
+	if (total < 0) {
+		total = total * -1;
 	}
 	return total;
 	//TODO - Add your implementation here

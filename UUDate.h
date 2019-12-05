@@ -2,8 +2,8 @@
 * UUDate.h
 *
 * Version information
-* Author: Conall Hanley - Add your name here
-* Date: 17/10/2019 - Add date you started working on the code
+* Author: Conall Hanley 
+* Date: 17/10/2019 
 * Description: This file is the header file for the UUDate class and declares the class interface
 * NOTE: Do not change the signatures of the functions provided. You may add your own support functions
 *
@@ -35,8 +35,9 @@ public:
 	std::string GetDate(); //Return date as a string in correct format
 
 	//Getters and Setters, remember to validate input to setters
-	int getmonthdays(int month);
-	bool isleapyear();
+	int getmonthdays(int month, int year);
+	bool isleapyear(int year);
+    bool isvalidday (int day);
 	int GetDay() const;
 	void SetDay(int day);
 	int GetMonth() const;
